@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# EYST project: never upload real data
+data/raw/
+data/real/
+*.db
+exports/
