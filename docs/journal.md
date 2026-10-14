@@ -29,3 +29,8 @@ EYST is a youth charity that currently records drop-in attendance on paper. This
 - Staff will check the total attendance on the Done screen before saving, as a sanity check on the count.
 
 - Real attendance history only begins once the system is live, so the prediction model will train on synthetic data first. This limitation will be stated in the documentation.
+
+## Entry 3: Synthetic data
+
+- Built a seeded generator (`src/generate_synthetic.py`) that creates 100 fake young people with an ID, name, year of birth and photo consent. Seeding both `random` and Faker makes the output identical every time, so results are reproducible for anyone who clones the repo.
+- Stored year of birth instead of exact date of birth, to stay in line with data minimisation.
