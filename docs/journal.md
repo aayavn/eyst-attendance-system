@@ -33,4 +33,11 @@ EYST is a youth charity that currently records drop-in attendance on paper. This
 ## Entry 3: Synthetic data
 
 - Built a seeded generator (`src/generate_synthetic.py`) that creates 100 fake young people with an ID, name, year of birth and photo consent. Seeding both `random` and Faker makes the output identical every time, so results are reproducible for anyone who clones the repo.
+
 - Stored year of birth instead of exact date of birth, to stay in line with data minimisation.
+
+- Extended the generator with weekly Wednesday sessions (17:00-19:00), developed a hidden attendance type per young person (regular, occasional, drifter) which drives the attendance probability, and simulated the attendance with arrival times, so once we get to it the prediction model has realistic-style patterns to learn even on the synthetic data.
+
+- Kept the hidden type out of `young_people.csv` and stored it separately as an answer key, because real data has no such column. The model will derive its own features from attendance records, so the label can't leak into the inputs.
+
+- The type mix and attendance probabilities are assumptions, not measured from EYST. Results on synthetic data will show that the pipeline works, but not how well it will predict real attendance.
