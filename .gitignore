@@ -224,3 +224,7 @@ data/raw/
 data/real/
 *.db
 exports/
+
+# macOS system files
+.DS_Store
+
