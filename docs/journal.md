@@ -41,3 +41,14 @@ EYST is a youth charity that currently records drop-in attendance on paper. This
 - Kept the hidden type out of `young_people.csv` and stored it separately as an answer key, because real data has no such column. The model will derive its own features from attendance records, so the label can't leak into the inputs.
 
 - The type mix and attendance probabilities are assumptions, not measured from EYST. Results on synthetic data will show that the pipeline works, but not how well it will predict real attendance.
+
+## Entry 4: Messy registration data
+
+- Built a generator for a deliberately messy fake registration export (`.xlsx`) on to the synthetic dataset we generated that mimics the MS Forms real dataset. Ensured a relatively accurate imitation via inconsistent capitals and spacing, mixed date formats, duplicate sign-ups, blanks and placeholders, a duplicate Email heading, and columns the system does not use all .
+
+- Decided which fields the app database imports, using an allow-list, and justified each one against what the register and model actually need:
+  - **Kept:** completion time (becomes the registration date, and breaks ties between duplicate sign-ups), full name (needed for the attendance register and search), date of birth (reduced to year of birth, enough for age analysis), and things interested in (I will keep this column as a possible model feature. If I end up not developing this feature I will drop this column also).
+  - **Dropped:** start time (no use), both Email columns and phone number (contact details the attendance register never uses or needs), address and postcode (identifying), ethnic group (special category data, not needed for attendance), next of kin and parent/guardian names (adults connected to children, a safeguarding risk to copy), medical information (sensitive, not needed), and both consent fields (photography and partner sharing). EYST's original spreadsheet remains the record of all of these.
+  - Any column I haven't chosen is dropped by default, so an unexpected field in a future export cannot reach the database by accident. This limits what the app processes and stores (data minimisation for this tool); it does not change what EYST holds in its original spreadsheet, which remains the record of all dropped data.
+
+- Gave this script its own random seed, separate from the generator, so the mess is reproducible and a change to one script doesn't silently alter the other's output.
